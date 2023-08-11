@@ -1,6 +1,6 @@
 # testdog
-jump in your framework (VS code or else)
-clone repositore
-in terminal run command 'git install'
-after run command 'npm run test'
-after manipulation in dir dogsnavigator you can find index.html with report
+1.jump in your framework (VS code or else)
+2.clone repositore
+3.in terminal run command 'git install'
+4.after run command 'npm run test'
+5.after manipulation in dir dogsnavigator you can find index.html with report
