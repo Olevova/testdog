@@ -32,7 +32,7 @@ describe("Four system login scenarios", () => {
       (elements) => elements
     );
     await formEl.phoneInput.sendKeys("963653768");
-    await formEl.passwordInput.sendKeys("33333");
+    await formEl.passwordInput.sendKeys("22222");
     await formEl.enterButton.click();
     await driver.wait(until.urlIs("https://dogsnavigator.com.ua/"), 10000);
     console.log("here");
