@@ -1,10 +1,10 @@
 const { describe } = require("mocha");
-const { Builder, By } = require("selenium-webdriver");
+const { Builder, By, until, wait } = require("selenium-webdriver");
 const should = require("chai").should();
 
 async function startEnterFunction(driv) {
   await driv.get("https://dogsnavigator.com.ua/login");
-  await driv.sleep(1000);
+  await driv.wait(until.elementsLocated(By.css("form")), 10000);
   const phoneInput = await driv.findElement(By.id("phone"));
   const passwordInput = await driv.findElement(By.id("password-reg"));
   const enterButton = await driv.findElement(
@@ -28,14 +28,14 @@ describe("Four system login scenarios", () => {
 
   it("success enter", async () => {
     await driver.get("https://dogsnavigator.com.ua/login");
-    await driver.sleep(1000);
     const formEl = await startEnterFunction(driver).then(
       (elements) => elements
     );
     await formEl.phoneInput.sendKeys("963653768");
     await formEl.passwordInput.sendKeys("33333");
     await formEl.enterButton.click();
-    await driver.sleep(1000);
+    await driver.wait(until.urlIs("https://dogsnavigator.com.ua/"), 10000);
+    console.log("here");
     const loggedIn = await driver
       .findElement(
         By.xpath(
@@ -48,7 +48,6 @@ describe("Four system login scenarios", () => {
 
   it("not valid the phone number", async () => {
     await driver.get("https://dogsnavigator.com.ua/login");
-    await driver.sleep(1000);
     const formEl = await startEnterFunction(driver).then(
       (elements) => elements
     );
@@ -56,6 +55,7 @@ describe("Four system login scenarios", () => {
     await formEl.passwordInput.sendKeys("33333");
     await formEl.enterButton.click();
     await driver.sleep(1000);
+
     const phoneInputClass = await formEl.phoneInput.getAttribute("class");
     await phoneInputClass.should.to.include("ng-invalid");
   });
@@ -68,20 +68,24 @@ describe("Four system login scenarios", () => {
     await formEl.phoneInput.sendKeys("963653768");
     await formEl.passwordInput.sendKeys("3333");
     await formEl.enterButton.click();
-    await driver.sleep(1000);
+    await driver.wait(
+      until.elementLocated(
+        By.className("width-100 password ng-invalid ng-dirty ng-touched"),
+        10000
+      )
+    );
     const passwordInputClass = await formEl.passwordInput.getAttribute("class");
     await passwordInputClass.should.to.include("ng-invalid");
   });
   it("bad the phone number or the password", async () => {
     await driver.get("https://dogsnavigator.com.ua/login");
-    await driver.sleep(1000);
     const formEl = await startEnterFunction(driver).then(
       (elements) => elements
     );
     await formEl.phoneInput.sendKeys("963653768");
     await formEl.passwordInput.sendKeys("3333333");
     await formEl.enterButton.click();
-    await driver.sleep(1000);
+    await driver.wait(until.elementLocated(By.className("error"), 10000));
     const badPhoneOrPassword = await driver
       .findElement(
         By.xpath(
