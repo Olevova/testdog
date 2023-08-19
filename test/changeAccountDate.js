@@ -23,12 +23,12 @@ describe("change date of account ", () => {
   let driver;
   beforeEach(async () => {
     const options = new chrome.Options();
-    // options.addArguments("--incognito");
+    options.addArguments("--incognito");
 
     driver = await new Builder()
       .forBrowser("chrome")
       .setChromeOptions(options)
-      // .usingServer("http://localhost:4444/wd/hub")
+      .usingServer("http://localhost:4444/wd/hub")
       .build();
     console.log("Driver created. Navigating to login page...");
 
